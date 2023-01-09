@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Introduction {
 
@@ -9,9 +7,8 @@ public class Introduction {
     private JLabel prompt;
     private JLabel introMessage;
     private JFrame introFrame;
-    private Integer[] POSSIBLE_BOUNDS = {3, 4, 5, 6, 7, 8, 9};
+    private final Integer[] POSSIBLE_BOUNDS = {3, 4, 5, 6, 7, 8, 9};
     private JComboBox<Integer> selectionBox;
-    private TicTacToe game;
 
     public Introduction(){
         initialiseIntroMessage();
@@ -43,13 +40,10 @@ public class Introduction {
         startButton.setBounds(160, 300, 150, 60);
         startButton.setFocusable(false);
         startButton.setFont(new Font("Courier New", Font.PLAIN, 20));
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int dimensionSelected = selectionBox.getItemAt(selectionBox.getSelectedIndex());
-                introFrame.dispose();
-                game = new TicTacToe(dimensionSelected);
-            }
+        startButton.addActionListener(e -> {
+            int dimensionSelected = selectionBox.getItemAt(selectionBox.getSelectedIndex());
+            introFrame.dispose();
+            new TicTacToe(dimensionSelected);
         });
     }
 
