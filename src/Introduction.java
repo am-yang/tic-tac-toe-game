@@ -56,7 +56,7 @@ public class Introduction {
     private void initialiseFrame(){
         introFrame = new JFrame("Tic-tac-toe game");
         introFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        introFrame.setSize(500, 500);
+        introFrame.setSize(600, 600);
         introFrame.getContentPane().add(prompt);
         introFrame.getContentPane().add(selectionBox);
         introFrame.getContentPane().add(startButton);
