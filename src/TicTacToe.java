@@ -64,6 +64,38 @@ public class TicTacToe {
         }
     }
 
+    private void turnRowGreen(int row){
+        for (int column = 0; column < DIMENSION; column++){
+            buttons[row][column].setBackground(Color.GREEN);
+            buttons[row][column].setOpaque(true);
+            buttons[row][column].setBorderPainted(false);
+        }
+    }
+
+    private void turnColumnGreen(int column){
+        for (int row = 0; row < DIMENSION; row++){
+            buttons[row][column].setBackground(Color.GREEN);
+            buttons[row][column].setOpaque(true);
+            buttons[row][column].setBorderPainted(false);
+        }
+    }
+
+    private void turnRightDiagonalGreen(){
+        for (int index = 0; index < DIMENSION; index++){
+            buttons[index][index].setBackground(Color.GREEN);
+            buttons[index][index].setOpaque(true);
+            buttons[index][index].setBorderPainted(false);
+        }
+    }
+
+    private void turnLeftDiagonalGreen(){
+        for (int index = 0; index < DIMENSION; index++){
+            buttons[index][DIMENSION - 1 - index].setBackground(Color.GREEN);
+            buttons[index][DIMENSION - 1 - index].setOpaque(true);
+            buttons[index][DIMENSION - 1 - index].setBorderPainted(false);
+        }
+    }
+
     private boolean isWinner(String currPlayer){
         int rowCount = 0;
         int columnCount = 0;
@@ -76,6 +108,7 @@ public class TicTacToe {
                 if (buttons[row][column].getText().equals(currPlayer)){
                     rowCount++;
                     if (rowCount == DIMENSION){
+                        turnRowGreen(row);
                         break RowOuterLoop;
                     }
                 }
@@ -85,6 +118,9 @@ public class TicTacToe {
                 }
             }
         }
+        if (rowCount == DIMENSION){
+            return true;
+        }
         // Now checking for vertical wins
         ColumnOuterLoop:
         for (int column = 0; column < DIMENSION; column++) {
@@ -92,6 +128,7 @@ public class TicTacToe {
                 if (buttons[row][column].getText().equals(currPlayer)){
                     columnCount++;
                     if (columnCount == DIMENSION){
+                        turnColumnGreen(column);
                         break ColumnOuterLoop;
                     }
                 }
@@ -100,6 +137,9 @@ public class TicTacToe {
                     break;
                 }
             }
+        }
+        if (columnCount == DIMENSION){
+            return true;
         }
         // Now checking for diagonal wins
         for (int index = 0; index < DIMENSION; index++){
@@ -110,6 +150,11 @@ public class TicTacToe {
                 break;
             }
         }
+        if (rightDiagonalCount == DIMENSION){
+            turnRightDiagonalGreen();
+            return true;
+        }
+
         for (int index = 0; index < DIMENSION; index++){
             if (buttons[index][DIMENSION - 1 - index].getText().equals(currPlayer)){
                 leftDiagonalCount++;
@@ -118,14 +163,16 @@ public class TicTacToe {
                 break;
             }
         }
-        return rowCount == DIMENSION || columnCount == DIMENSION || rightDiagonalCount == DIMENSION ||
-                leftDiagonalCount == DIMENSION;
+        if (leftDiagonalCount == DIMENSION){
+            turnLeftDiagonalGreen();
+            return true;
+        }
+        return false;
 
     }
 
     private void initialiseGameFrame(){
         gameFrame  = new JFrame("Tic-tac-toe game");
-        gameFrame.setBackground(Color.PINK);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setSize(650, 650);
         gameFrame.setLayout(null);
