@@ -16,16 +16,17 @@ public class TicTacToe {
     }
 
     private void initialiseButtons() {
+        int size = (15 - DIMENSION) * 10; // Simple formula to roughly resize buttons as game dimensions increase
         buttons = new JButton[DIMENSION][DIMENSION];
         for (int row = 0; row < DIMENSION; row++){
             for (int column = 0; column < DIMENSION; column++){
                 buttons[row][column] = new JButton();
-                buttons[row][column].setBounds(buttonX, buttonY, 60, 60);
+                buttons[row][column].setBounds(buttonX, buttonY, size, size);
                 gameFrame.getContentPane().add(buttons[row][column]);
-                buttonX += 60;
+                buttonX += size;
             }
             buttonX = 20;
-            buttonY += 60;
+            buttonY += size;
         }
     }
 
@@ -33,7 +34,7 @@ public class TicTacToe {
         gameFrame  = new JFrame("Tic-tac-toe game");
         gameFrame.setBackground(Color.PINK);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFrame.setSize(600, 600);
+        gameFrame.setSize(650, 650);
         gameFrame.setLayout(null);
         gameFrame.setVisible(true);
     }
