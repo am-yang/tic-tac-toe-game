@@ -8,7 +8,6 @@ public class TicTacToe {
     private final int DIMENSION;
     private JFrame gameFrame;
     private JButton[][] buttons;
-    private JLabel winMessage;
     private int buttonY = 20;
     private int buttonX = 20;
     private boolean xTurn = true; // X player is always first
@@ -16,11 +15,6 @@ public class TicTacToe {
     public TicTacToe(int dimension){
         DIMENSION = dimension;
         initialiseGameFrame();
-        winMessage = new JLabel();
-        winMessage.setBounds(170, 550, 200, 50);
-        winMessage.setFont(new Font("Courier New", Font.PLAIN, 30));
-        winMessage.setForeground(new Color(34,139,34));
-        gameFrame.getContentPane().add(winMessage);
         initialiseButtons();
     }
 
@@ -40,18 +34,12 @@ public class TicTacToe {
                             if (((JButton)e.getSource()).getText().equals("")){
                                 ((JButton)e.getSource()).setText("X");
                                 xTurn = false;
-                                if (isWinner("X")){
-                                    winMessage.setText("X WINS!!!");
-                                }
                             }
                         }
                         else {
                             if (((JButton)e.getSource()).getText().equals("")){
                                 ((JButton)e.getSource()).setText("O");
                                 xTurn = true;
-                                if (isWinner("O")){
-                                    winMessage.setText("O WINS!!!");
-                                }
                             }
                         }
                     }
@@ -63,6 +51,7 @@ public class TicTacToe {
             buttonY += size;
         }
     }
+
 
     private void turnRowGreen(int row){
         for (int column = 0; column < DIMENSION; column++){
@@ -181,3 +170,4 @@ public class TicTacToe {
 
 
 }
+
