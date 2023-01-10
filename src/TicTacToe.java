@@ -1,19 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class TicTacToe {
 
     private final int DIMENSION;
-    private final String DIFFICULTY;
     private JFrame gameFrame;
     private JButton[][] buttons;
     private int buttonY = 20;
     private int buttonX = 20;
+    private AI aiPlayer;
 
     public TicTacToe(int dimension, String difficulty){
         DIMENSION = dimension;
-        DIFFICULTY = difficulty;
+        aiPlayer = new AI(dimension, difficulty);
         initialiseGameFrame();
         initialiseButtons();
     }
@@ -30,7 +29,7 @@ public class TicTacToe {
                     // Button must be empty to be a valid move
                     if (((JButton)e.getSource()).getText().equals("")){
                         ((JButton)e.getSource()).setText("X");
-                        oTurn();
+                        aiPlayer.play(buttons);
                     }
                 });
                 gameFrame.getContentPane().add(buttons[row][column]);
@@ -41,29 +40,29 @@ public class TicTacToe {
         }
     }
 
-    public void oTurn(){
-        if (DIFFICULTY.equals("Easy")){
-            Outer:
-            for (int row = 0; row < DIMENSION; row++){
-                for (int column = 0; column < DIMENSION; column++){
-                    if (buttons[row][column].getText().isEmpty()){
-                        buttons[row][column].setText("O");
-                        break Outer;
-                    }
-                }
-            }
-        }
-        else if (DIFFICULTY.equals("Medium")){
-            Random random = new Random();
-            int row = random.nextInt(DIMENSION);
-            int column = random.nextInt(DIMENSION);
-            while (!buttons[row][column].getText().isEmpty()){
-                row = random.nextInt(DIMENSION);
-                column = random.nextInt(DIMENSION);
-            }
-            buttons[row][column].setText("O");
-        }
-    }
+//    public void oTurn(){
+//        if (DIFFICULTY.equals("Easy")){
+//            Outer:
+//            for (int row = 0; row < DIMENSION; row++){
+//                for (int column = 0; column < DIMENSION; column++){
+//                    if (buttons[row][column].getText().isEmpty()){
+//                        buttons[row][column].setText("O");
+//                        break Outer;
+//                    }
+//                }
+//            }
+//        }
+//        else if (DIFFICULTY.equals("Medium")){
+//            Random random = new Random();
+//            int row = random.nextInt(DIMENSION);
+//            int column = random.nextInt(DIMENSION);
+//            while (!buttons[row][column].getText().isEmpty()){
+//                row = random.nextInt(DIMENSION);
+//                column = random.nextInt(DIMENSION);
+//            }
+//            buttons[row][column].setText("O");
+//        }
+//    }
 
     private boolean isWinner(String currPlayer){
         int rowCount = 0;
