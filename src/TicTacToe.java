@@ -1,18 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TicTacToe {
 
     private final int DIMENSION;
+    private final String DIFFICULTY;
     private JFrame gameFrame;
     private JButton[][] buttons;
     private int buttonY = 20;
     private int buttonX = 20;
 
-    public TicTacToe(int dimension){
+    public TicTacToe(int dimension, String difficulty){
         DIMENSION = dimension;
+        DIFFICULTY = difficulty;
         initialiseGameFrame();
         initialiseButtons();
     }
@@ -25,14 +25,11 @@ public class TicTacToe {
                 buttons[row][column] = new JButton();
                 buttons[row][column].setBounds(buttonX, buttonY, size, size);
                 buttons[row][column].setFont(new Font("Courier New", Font.BOLD, 20));
-                buttons[row][column].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Button must be empty to be a valid move
-                        if (((JButton)e.getSource()).getText().equals("")){
-                            ((JButton)e.getSource()).setText("X");
-                            oTurn();
-                        }
+                buttons[row][column].addActionListener(e -> {
+                    // Button must be empty to be a valid move
+                    if (((JButton)e.getSource()).getText().equals("")){
+                        ((JButton)e.getSource()).setText("X");
+                        oTurn();
                     }
                 });
                 gameFrame.getContentPane().add(buttons[row][column]);
