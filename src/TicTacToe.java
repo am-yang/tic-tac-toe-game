@@ -10,7 +10,6 @@ public class TicTacToe {
     private JButton[][] buttons;
     private int buttonY = 20;
     private int buttonX = 20;
-    private boolean xTurn = true; // X player is always first
 
     public TicTacToe(int dimension){
         DIMENSION = dimension;
@@ -29,18 +28,10 @@ public class TicTacToe {
                 buttons[row][column].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (xTurn){
-                            // Button must be empty to be a valid move
-                            if (((JButton)e.getSource()).getText().equals("")){
-                                ((JButton)e.getSource()).setText("X");
-                                xTurn = false;
-                            }
-                        }
-                        else {
-                            if (((JButton)e.getSource()).getText().equals("")){
-                                ((JButton)e.getSource()).setText("O");
-                                xTurn = true;
-                            }
+                        // Button must be empty to be a valid move
+                        if (((JButton)e.getSource()).getText().equals("")){
+                            ((JButton)e.getSource()).setText("X");
+                            oTurn();
                         }
                     }
                 });
@@ -49,6 +40,18 @@ public class TicTacToe {
             }
             buttonX = 20;
             buttonY += size;
+        }
+    }
+
+    public void oTurn(){
+        Outer:
+        for (int row = 0; row < DIMENSION; row++){
+            for (int column = 0; column < DIMENSION; column++){
+                if (buttons[row][column].getText().isEmpty()){
+                    buttons[row][column].setText("O");
+                    break Outer;
+                }
+            }
         }
     }
 
@@ -170,4 +173,3 @@ public class TicTacToe {
 
 
 }
-
