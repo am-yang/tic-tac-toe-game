@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class TicTacToe {
 
@@ -41,47 +42,26 @@ public class TicTacToe {
     }
 
     public void oTurn(){
-        Outer:
-        for (int row = 0; row < DIMENSION; row++){
-            for (int column = 0; column < DIMENSION; column++){
-                if (buttons[row][column].getText().isEmpty()){
-                    buttons[row][column].setText("O");
-                    break Outer;
+        if (DIFFICULTY.equals("Easy")){
+            Outer:
+            for (int row = 0; row < DIMENSION; row++){
+                for (int column = 0; column < DIMENSION; column++){
+                    if (buttons[row][column].getText().isEmpty()){
+                        buttons[row][column].setText("O");
+                        break Outer;
+                    }
                 }
             }
         }
-    }
-
-
-    private void turnRowGreen(int row){
-        for (int column = 0; column < DIMENSION; column++){
-            buttons[row][column].setBackground(Color.GREEN);
-            buttons[row][column].setOpaque(true);
-            buttons[row][column].setBorderPainted(false);
-        }
-    }
-
-    private void turnColumnGreen(int column){
-        for (int row = 0; row < DIMENSION; row++){
-            buttons[row][column].setBackground(Color.GREEN);
-            buttons[row][column].setOpaque(true);
-            buttons[row][column].setBorderPainted(false);
-        }
-    }
-
-    private void turnRightDiagonalGreen(){
-        for (int index = 0; index < DIMENSION; index++){
-            buttons[index][index].setBackground(Color.GREEN);
-            buttons[index][index].setOpaque(true);
-            buttons[index][index].setBorderPainted(false);
-        }
-    }
-
-    private void turnLeftDiagonalGreen(){
-        for (int index = 0; index < DIMENSION; index++){
-            buttons[index][DIMENSION - 1 - index].setBackground(Color.GREEN);
-            buttons[index][DIMENSION - 1 - index].setOpaque(true);
-            buttons[index][DIMENSION - 1 - index].setBorderPainted(false);
+        else if (DIFFICULTY.equals("Medium")){
+            Random random = new Random();
+            int row = random.nextInt(DIMENSION);
+            int column = random.nextInt(DIMENSION);
+            while (!buttons[row][column].getText().isEmpty()){
+                row = random.nextInt(DIMENSION);
+                column = random.nextInt(DIMENSION);
+            }
+            buttons[row][column].setText("O");
         }
     }
 
@@ -97,7 +77,6 @@ public class TicTacToe {
                 if (buttons[row][column].getText().equals(currPlayer)){
                     rowCount++;
                     if (rowCount == DIMENSION){
-                        turnRowGreen(row);
                         break RowOuterLoop;
                     }
                 }
@@ -117,7 +96,6 @@ public class TicTacToe {
                 if (buttons[row][column].getText().equals(currPlayer)){
                     columnCount++;
                     if (columnCount == DIMENSION){
-                        turnColumnGreen(column);
                         break ColumnOuterLoop;
                     }
                 }
@@ -140,7 +118,6 @@ public class TicTacToe {
             }
         }
         if (rightDiagonalCount == DIMENSION){
-            turnRightDiagonalGreen();
             return true;
         }
 
@@ -153,7 +130,6 @@ public class TicTacToe {
             }
         }
         if (leftDiagonalCount == DIMENSION){
-            turnLeftDiagonalGreen();
             return true;
         }
         return false;
