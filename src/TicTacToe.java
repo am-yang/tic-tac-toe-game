@@ -8,7 +8,7 @@ public class TicTacToe {
     private JButton[][] buttons;
     private int buttonY = 20;
     private int buttonX = 20;
-    private AI aiPlayer;
+    private final AI aiPlayer;
 
     public TicTacToe(int dimension, String difficulty){
         DIMENSION = dimension;
@@ -38,101 +38,6 @@ public class TicTacToe {
             buttonX = 20;
             buttonY += size;
         }
-    }
-
-//    public void oTurn(){
-//        if (DIFFICULTY.equals("Easy")){
-//            Outer:
-//            for (int row = 0; row < DIMENSION; row++){
-//                for (int column = 0; column < DIMENSION; column++){
-//                    if (buttons[row][column].getText().isEmpty()){
-//                        buttons[row][column].setText("O");
-//                        break Outer;
-//                    }
-//                }
-//            }
-//        }
-//        else if (DIFFICULTY.equals("Medium")){
-//            Random random = new Random();
-//            int row = random.nextInt(DIMENSION);
-//            int column = random.nextInt(DIMENSION);
-//            while (!buttons[row][column].getText().isEmpty()){
-//                row = random.nextInt(DIMENSION);
-//                column = random.nextInt(DIMENSION);
-//            }
-//            buttons[row][column].setText("O");
-//        }
-//    }
-
-    private boolean isWinner(String currPlayer){
-        int rowCount = 0;
-        int columnCount = 0;
-        int rightDiagonalCount = 0;
-        int leftDiagonalCount = 0;
-        // First checking if there are horizontal wins
-        RowOuterLoop:
-        for (int row = 0; row < DIMENSION; row++){
-            for (int column = 0; column < DIMENSION; column++){
-                if (buttons[row][column].getText().equals(currPlayer)){
-                    rowCount++;
-                    if (rowCount == DIMENSION){
-                        break RowOuterLoop;
-                    }
-                }
-                else {
-                    rowCount = 0;
-                    break;
-                }
-            }
-        }
-        if (rowCount == DIMENSION){
-            return true;
-        }
-        // Now checking for vertical wins
-        ColumnOuterLoop:
-        for (int column = 0; column < DIMENSION; column++) {
-            for (int row = 0; row < DIMENSION; row++) {
-                if (buttons[row][column].getText().equals(currPlayer)){
-                    columnCount++;
-                    if (columnCount == DIMENSION){
-                        break ColumnOuterLoop;
-                    }
-                }
-                else {
-                    columnCount = 0;
-                    break;
-                }
-            }
-        }
-        if (columnCount == DIMENSION){
-            return true;
-        }
-        // Now checking for diagonal wins
-        for (int index = 0; index < DIMENSION; index++){
-            if (buttons[index][index].getText().equals(currPlayer)){
-                rightDiagonalCount++;
-            }
-            else {
-                break;
-            }
-        }
-        if (rightDiagonalCount == DIMENSION){
-            return true;
-        }
-
-        for (int index = 0; index < DIMENSION; index++){
-            if (buttons[index][DIMENSION - 1 - index].getText().equals(currPlayer)){
-                leftDiagonalCount++;
-            }
-            else {
-                break;
-            }
-        }
-        if (leftDiagonalCount == DIMENSION){
-            return true;
-        }
-        return false;
-
     }
 
     private void initialiseGameFrame(){
